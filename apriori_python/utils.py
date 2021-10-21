@@ -51,7 +51,8 @@ def getAboveMinSup(itemSet, itemSetList, minSup, globalItemSetWithSup):
                 localItemSetWithSup[item] += 1
 
     for item, supCount in localItemSetWithSup.items():
-        support = float(supCount / len(itemSetList))
+        #support = float(supCount / len(itemSetList))
+        support = supCount
         if(support >= minSup):
             freqItemSet.add(item)
 

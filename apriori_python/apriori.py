@@ -3,6 +3,8 @@ from collections import defaultdict
 from itertools import chain, combinations
 from optparse import OptionParser
 from apriori_python.utils import *
+import time
+import matplotlib.pyplot as plt
 
 def apriori(itemSetList, minSup, minConf):
     C1ItemSet = getItemSetFromList(itemSetList)
@@ -59,11 +61,32 @@ def aprioriFromFile(fname, minSup, minConf):
         currentLSet = getAboveMinSup(
             candidateSet, itemSetList, minSup, globalItemSetWithSup)
         k += 1
-
-    rules = associationRule(globalFreqItemSet, globalItemSetWithSup, minConf)
-    rules.sort(key=lambda x: x[2])
+    rules = None
+    #rules = associationRule(globalFreqItemSet, globalItemSetWithSup, minConf)
+    #rules.sort(key=lambda x: x[2])
 
     return globalFreqItemSet, rules
+
+def graph(options):
+    print(int(options.minSup))
+    print(int(options.minConf))
+    x = []
+    y = []
+    for i in range(10, int(options.minSup), 10):
+        start_time = time.time()
+        aprioriFromFile(options.inputFile, i, options.minConf)
+        x.append(i)
+        y.append((time.time() - start_time))
+    print(x)
+    print(y)
+    plt.plot(x, y, 'k-', marker='o', lw=0.5)
+    plt.xlabel('Support threshold')
+    plt.ylabel('Runtime (sec)')
+    plt.grid(color='black', linestyle='-', linewidth=0.09)
+    plt.title('Time against support threshold')
+    print("Done")
+    plt.show()
+
 
 if __name__ == "__main__":
     optparser = OptionParser()
@@ -83,5 +106,6 @@ if __name__ == "__main__":
                          type='float')
 
     (options, args) = optparser.parse_args()
-
+    #graph(options)
     freqItemSet, rules = aprioriFromFile(options.inputFile, options.minSup, options.minConf)
+    print(freqItemSet)
