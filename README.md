@@ -13,12 +13,14 @@ python apriori.py  -f ../dataset/data3.csv -s 60
 
 ```
 ### Example dataset3.csv
-### Lattice 
 
 <p align=center>
     <img src="./doc/lattice.PNG" width="440" height="331">
 </p>
 
+<p align=center>
+    <img src="./doc/graph.png" width="440" height="331">
+</p>
 
 ## Concepts of Apriori
 
